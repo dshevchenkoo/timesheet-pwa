@@ -1,20 +1,21 @@
 package com.dshevchenkoo.timesheet;
 
-import com.dshevchenkoo.timesheet.domain.Group;
-import com.dshevchenkoo.timesheet.repos.GroupRepo;
+import com.dshevchenkoo.timesheet.domain.TeachingGroup;
+import com.dshevchenkoo.timesheet.repos.TeachingGroupRepo;
+import com.sun.xml.internal.messaging.saaj.util.TeeInputStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
 import java.util.Map;
 
 @Controller
 public class GreetingController {
     @Autowired
-    private GroupRepo groupRepo;
+    private TeachingGroupRepo teachingGroupRepo;
 
     @GetMapping("/greeting")
     public String greeting(
@@ -25,17 +26,30 @@ public class GreetingController {
 
     @GetMapping
     public String main(Map<String, Object> model){
-        Iterable<Group> groups = groupRepo.findAll();
+        Iterable<TeachingGroup> groups = teachingGroupRepo.findAll();
         model.put("groups", groups);
         return "main";
     }
 
-    @PostMapping
+    @PostMapping("add")
     public String add(@RequestParam String number, Map<String, Object> model){
-        Group group = new Group(number);
-        groupRepo.save(group);
-        Iterable<Group> groups = groupRepo.findAll();
+        TeachingGroup teachingGroup = new TeachingGroup(number);
+        teachingGroupRepo.save(teachingGroup);
+        Iterable<TeachingGroup> groups = teachingGroupRepo.findAll();
         model.put("groups", groups);
         return "main";
     }
+
+    @PostMapping("filter")
+    public String filter(@RequestParam String filter, Map<String, Object> model){
+        Iterable<TeachingGroup> groups;
+        if (filter != null && !filter.isEmpty()){
+            groups = teachingGroupRepo.findByNumber(filter);
+        } else {
+            groups = teachingGroupRepo.findAll();
+        }
+        model.put("groups", groups);
+        return "main";
+    }
+
 }
