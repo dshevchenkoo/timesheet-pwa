@@ -1,7 +1,15 @@
 <html>
-    <body>
+<body>
+    <div>Список групп:</div>
+    <form method="post" action="/main">
+        <input type="text" name="number" placeholder="Введите группу" />
+        <button type="submit">Добавить</button>
+    </form>
+    {{#groups}}
         <div>
-            {{some}}
+            <b>{{id}}</b>
+            <span>{{number}}</span>
         </div>
-    </body>
+    {{/groups}}
+</body>
 </html>
