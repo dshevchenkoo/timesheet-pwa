@@ -7,7 +7,7 @@
         </form>
     </div>
     <div>
-        <form method="post" action="add">
+        <form method="post" action="main">
             <input type="text" name="number" placeholder="Введите группу" />
             <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
             <button type="submit">Добавить</button>
@@ -23,6 +23,7 @@
         <div>
             <b>{{id}}</b>
             <span>{{number}}</span>
+            <strong>{{authorName}}</strong>
         </div>
     {{/groups}}
 </body>

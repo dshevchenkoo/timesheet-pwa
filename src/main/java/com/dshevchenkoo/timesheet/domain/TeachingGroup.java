@@ -8,22 +8,23 @@ public class TeachingGroup {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id;
     private String number;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
     private User author;
-
-    public User getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(User author) {
-        this.author = author;
-    }
 
     public TeachingGroup() {
         this.number = "";
     }
 
-    public TeachingGroup(String number) {
+    public TeachingGroup(String number, User user)
+    {
+        this.author = user;
         this.number = number;
+    }
+
+    public String getAuthorName(){
+        return author != null ? author.getUsername() : "<none>";
     }
 
     public void setNumber(String number){
@@ -39,5 +40,13 @@ public class TeachingGroup {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public User getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(User author) {
+        this.author = author;
     }
 }

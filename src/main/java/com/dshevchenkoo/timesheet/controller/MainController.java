@@ -1,9 +1,11 @@
 package com.dshevchenkoo.timesheet.controller;
 
 import com.dshevchenkoo.timesheet.domain.TeachingGroup;
+import com.dshevchenkoo.timesheet.domain.User;
 import com.dshevchenkoo.timesheet.repos.TeachingGroupRepo;
 import com.sun.xml.internal.messaging.saaj.util.TeeInputStream;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,16 +27,26 @@ public class MainController {
     @GetMapping("/main")
     public String main(Map<String, Object> model){
         Iterable<TeachingGroup> groups = teachingGroupRepo.findAll();
+
         model.put("groups", groups);
+
         return "main";
     }
 
     @PostMapping("/main")
-    public String add(@RequestParam String number, Map<String, Object> model){
-        TeachingGroup teachingGroup = new TeachingGroup(number);
+    public String add(
+            @AuthenticationPrincipal User user,
+            @RequestParam String number,
+            Map<String, Object> model
+    ){
+        TeachingGroup teachingGroup = new TeachingGroup(number, user);
+
         teachingGroupRepo.save(teachingGroup);
+
         Iterable<TeachingGroup> groups = teachingGroupRepo.findAll();
+
         model.put("groups", groups);
+
         return "main";
     }
 
