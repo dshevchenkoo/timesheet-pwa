@@ -8,6 +8,16 @@ public class TeachingGroup {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id;
     private String number;
+    private User author;
+
+    public User getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(User author) {
+        this.author = author;
+    }
+
     public TeachingGroup() {
         this.number = "";
     }

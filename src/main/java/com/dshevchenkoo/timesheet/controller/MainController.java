@@ -1,4 +1,4 @@
-package com.dshevchenkoo.timesheet;
+package com.dshevchenkoo.timesheet.controller;
 
 import com.dshevchenkoo.timesheet.domain.TeachingGroup;
 import com.dshevchenkoo.timesheet.repos.TeachingGroupRepo;
@@ -13,25 +13,23 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-public class GreetingController {
+public class MainController {
     @Autowired
     private TeachingGroupRepo teachingGroupRepo;
 
-    @GetMapping("/greeting")
-    public String greeting(
-            @RequestParam(name="name", required=false, defaultValue="World") String name, Map<String, Object> model) {
-        model.put("name", name);
+    @GetMapping("/")
+    public String greeting(Map<String, Object> model){
         return "greeting";
     }
 
-    @GetMapping
+    @GetMapping("/main")
     public String main(Map<String, Object> model){
         Iterable<TeachingGroup> groups = teachingGroupRepo.findAll();
         model.put("groups", groups);
         return "main";
     }
 
-    @PostMapping("add")
+    @PostMapping("/main")
     public String add(@RequestParam String number, Map<String, Object> model){
         TeachingGroup teachingGroup = new TeachingGroup(number);
         teachingGroupRepo.save(teachingGroup);
