@@ -4,11 +4,13 @@
 <@c.page>
 <div>
     <@l.logout />
+    <span><a href="/user">User list</a></span>
 </div>
 
     <div>
-        <form method="post" action="/main">
+        <form method="post" enctype="multipart/form-data">
             <input type="text" name="number" placeholder="Введите сообщение" />
+            <input type="file" name="file">
             <input type="hidden" name="_csrf" value="${_csrf.token}" />
             <button type="submit">Добавить</button>
         </form>
@@ -24,6 +26,11 @@
             <b>${group.id}</b>
             <span>${group.number}</span>
             <strong>${group.authorName}</strong>
+            <div>
+                <#if group.filename??>
+                    <img src="/img/${group.filename}">
+                </#if>
+            </div>
         </div>
     <#else>
 No group
