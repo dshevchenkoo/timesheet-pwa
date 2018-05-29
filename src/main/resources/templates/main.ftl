@@ -1,30 +1,32 @@
-<html>
-<body>
+<#import "parts/common.ftl" as c>
+<#import "parts/login.ftl" as l>
+
+<@c.page>
+<div>
+    <@l.logout />
+</div>
+
     <div>
-        <form action="/logout" method="post">
-            <input type="submit" value="Sign Out">
-            <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
-        </form>
-    </div>
-    <div>
-        <form method="post" action="main">
-            <input type="text" name="number" placeholder="Введите группу" />
-            <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
+        <form method="post" action="/main">
+            <input type="text" name="number" placeholder="Введите сообщение" />
+            <input type="hidden" name="_csrf" value="${_csrf.token}" />
             <button type="submit">Добавить</button>
         </form>
-        <form method="post" action="filter">
-            <input type="text" name="filter">
-            <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
+    </div>
+    <div>Список сообщений</div>
+        <form method="get" action="/main">
+            <input type="text" name="filter" value="${filter?ifExists}">
             <button type="submit">Найти</button>
         </form>
-    </div>
     <div>Список групп:</div>
-    {{#groups}}
+    <#list groups as group>
         <div>
-            <b>{{id}}</b>
-            <span>{{number}}</span>
-            <strong>{{authorName}}</strong>
+            <b>${group.id}</b>
+            <span>${group.number}</span>
+            <strong>${group.authorName}</strong>
         </div>
-    {{/groups}}
-</body>
-</html>
+    <#else>
+No group
+    </#list>
+
+</@c.page>
