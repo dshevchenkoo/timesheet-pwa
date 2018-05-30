@@ -3,7 +3,6 @@ package com.dshevchenkoo.timesheet.controller;
 import com.dshevchenkoo.timesheet.domain.TeachingGroup;
 import com.dshevchenkoo.timesheet.domain.User;
 import com.dshevchenkoo.timesheet.repos.TeachingGroupRepo;
-import com.sun.xml.internal.messaging.saaj.util.TeeInputStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -16,7 +15,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 

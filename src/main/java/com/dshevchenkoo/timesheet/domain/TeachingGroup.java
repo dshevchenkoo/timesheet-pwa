@@ -6,8 +6,8 @@ import javax.persistence.*;
 public class TeachingGroup {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    private Integer id;
-    private String number;
+    private Long id;
+    private String groupNumber;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
@@ -24,31 +24,31 @@ public class TeachingGroup {
     }
 
     public TeachingGroup() {
-        this.number = "";
+        this.groupNumber = "";
     }
 
-    public TeachingGroup(String number, User user)
+    public TeachingGroup(String groupNumber, User user)
     {
         this.author = user;
-        this.number = number;
+        this.groupNumber = groupNumber;
     }
 
     public String getAuthorName(){
         return author != null ? author.getUsername() : "<none>";
     }
 
-    public void setNumber(String number){
-        this.number = number;
+    public void setGroupNumber(String groupNumber){
+        this.groupNumber = groupNumber;
     }
-    public String getNumber(){
-        return number;
+    public String getGroupNumber(){
+        return groupNumber;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

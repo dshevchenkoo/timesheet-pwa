@@ -1,6 +1,6 @@
 <#import "parts/common.ftl" as c>
 
 <@c.page>
-<div>Hello, user</div>
-<a href="/main">Main page</a>
+<h5>Привет, гость!</h5>
+<div>Сайт с рапсисанием ИМИТ</div>
 </@c.page>
