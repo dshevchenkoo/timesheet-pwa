@@ -8,17 +8,18 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 public class UserService implements UserDetailsService {
     @Autowired
     private UserRepo userRepo;
+
+    @Autowired
+    private MailSender mailSender;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -47,8 +48,46 @@ public class UserService implements UserDetailsService {
         userRepo.save(user);
     }
 
+    public boolean addUser(User user){
+        User userFromDb = userRepo.findByUsername(user.getUsername());
+
+        if (userFromDb != null){
+            return false;
+        }
+
+        user.setActive(true);
+        user.setRoles(Collections.singleton(Role.USER));
+        user.setActivationCode(UUID.randomUUID().toString());
+        userRepo.save(user);
+
+        if (!StringUtils.isEmpty(user.getEmail())){
+            String message = String.format(
+                    "Здравтсвуйте, %s! \n" +
+                    "Добро пожаловать в систему расписаний Timesheet. Пожалуйста, перейдите по ссылке: http://localhost:8080/activate/%s",
+                    user.getUsername(),
+                    user.getActivationCode()
+            );
+            mailSender.send(user.getEmail(), "Activation code", message);
+        }
+
+        return true;
+    }
+
     public void updateProfile(User user, String password) {
         //String user
 
+    }
+
+    public boolean acrivateUser(String code) {
+        User user = userRepo.findByActivationCode(code);
+
+        if (user == null){
+            return false;
+        }
+
+        user.setActivationCode(code);
+        userRepo.save(user);
+
+        return false;
     }
 }
