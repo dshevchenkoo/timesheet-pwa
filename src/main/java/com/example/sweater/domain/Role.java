@@ -1,4 +1,4 @@
-package com.dshevchenkoo.timesheet.domain;
+package com.example.sweater.domain;
 
 import org.springframework.security.core.GrantedAuthority;
 

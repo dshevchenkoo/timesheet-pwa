@@ -1,3 +1,18 @@
-body{
+body {
     color: #113;
+}
+
+.navbar {
+    background-color: #f46253;
+}
+
+.navbar a {
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+}
+
+.btn-color {
+    color: #fff;
+    background-color: #f46253;
+    border-color: #f46253;
 }
